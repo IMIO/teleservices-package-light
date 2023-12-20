@@ -8,14 +8,14 @@
     <status>
       <id>just_submitted</id>
       <name>Nouvelle demande</name>
-      <colour>FFFFFF</colour>
+      <colour>#FFFFFF</colour>
       <visibility>
         <role>_receiver</role>
       </visibility><items>
         <item type="dispatch" id="1">
           <role_key>_receiver</role_key>
           <dispatch_type>manual</dispatch_type>
-          <role_id role_id="{{ form_var_service_role }}">{{ form_var_service_role }}</role_id>
+          <role_id slug="{{ form_var_service_role }}" role_id="{{ form_var_service_role }}">{{ form_var_service_role }}</role_id>
           <operation_mode>set</operation_mode>
         </item><item type="export_to_model" id="2">
           <model_file>
@@ -190,10 +190,10 @@ b250ZW50LnhtbFBLAQIUABQACAgIAKQqc1Ah7C3TLQEAACUEAAAVAAAAAAAAAAAAAAAAADUfAABN
 RVRBLUlORi9tYW5pZmVzdC54bWxQSwUGAAAAABEAEQBlBAAApSAAAAAA
 </b64_content>
           </model_file><convert_to_pdf>True</convert_to_pdf>
+<varname>formulaire</varname>
           <backoffice_filefield_id>bof78850cf-235e-418c-9c70-dea693df9488</backoffice_filefield_id>
           <attach_to_history>False</attach_to_history>
-          <varname>formulaire</varname>
-          <push_to_portfolio>False</push_to_portfolio>
+                    <push_to_portfolio>False</push_to_portfolio>
           <method>non-interactive</method>
           <by>
             <item role_id="_receiver">_receiver</item>
@@ -249,7 +249,7 @@ Pour r&#233;f&#233;rence, voici le d&#233;tail de la demande&#160;:
     </status><status>
       <id>accepted</id>
       <name>En cours de traitement</name>
-      <colour>66CCFF</colour>
+      <colour>#66CCFF</colour>
       <visibility />
       <items>
         <item type="commentable" id="2">
@@ -285,7 +285,7 @@ Pour r&#233;f&#233;rence, voici le d&#233;tail de la demande&#160;:
     </status><status>
       <id>finished</id>
       <name>Termin&#233;</name>
-      <colour>CCCCCC</colour>
+      <colour>#CCCCCC</colour>
       <forced_endpoint>true</forced_endpoint>
       <visibility />
       <items>
@@ -294,16 +294,12 @@ Pour r&#233;f&#233;rence, voici le d&#233;tail de la demande&#160;:
           <to>
             <item role_id="_receiver">_receiver</item>
           </to>
-        </item><item type="sendmail" id="2">
-          <to>
-            <item role_id="_submitter">_submitter</item>
-          </to><mail_template>indus-usager-demande-traitee</mail_template>
-        </item>
+                </item>
       </items>
     </status><status>
       <id>0</id>
       <name>Trait&#233;</name>
-      <colour>FFFFFF</colour>
+      <colour>#FFFFFF</colour>
       <visibility />
       <items>
         <item type="form" id="1">
@@ -329,6 +325,10 @@ Pour r&#233;f&#233;rence, voici le d&#233;tail de la demande&#160;:
               </field>
             </fields>
           </formdef>
+</item><item type="sendmail" id="3">
+          <to>
+            <item role_id="_submitter">_submitter</item>
+          </to><mail_template>indus-usager-demande-traitee</mail_template>
         </item><item type="choice" id="2">
           <label>Cl&#244;turer la demande</label>
           <by>
