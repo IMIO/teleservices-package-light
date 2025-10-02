@@ -158,9 +158,7 @@
       <remove_button type="bool">True</remove_button>
       <id type="str">14</id>
     </field>
-  </fields><user-roles>
-    <role slug="citoyen-test" role_id="45d1eb0a941f44f68289eb1586be448e">Citoyen (test)</role>
-  </user-roles><roles />
+  </fields>
   <options />
   <custom_views />
   <geolocations />
