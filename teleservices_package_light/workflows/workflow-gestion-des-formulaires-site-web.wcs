@@ -295,6 +295,17 @@ Pour r&#233;f&#233;rence, voici le d&#233;tail de la demande&#160;:
           <set_marker_on_status>False</set_marker_on_status>
           <allow_as_mass_action>False</allow_as_mass_action>
         </item>
+        <item type="choice" id="4">
+          <label>Transmettre la demande &#224; un autre service</label>
+          <by>
+            <item role_id="_receiver">_receiver</item>
+          </by>
+          <status>1</status>
+          <require_confirmation>False</require_confirmation>
+          <ignore_form_errors>False</ignore_form_errors>
+          <set_marker_on_status>False</set_marker_on_status>
+          <allow_as_mass_action>False</allow_as_mass_action>
+        </item>
       </items>
     </status>
     <status>
