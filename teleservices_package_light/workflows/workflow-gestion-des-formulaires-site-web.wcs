@@ -289,7 +289,7 @@ Pour r&#233;f&#233;rence, voici le d&#233;tail de la demande&#160;:
           <by>
             <item role_id="_receiver">_receiver</item>
           </by>
-          <status>finished</status>
+          <status>0</status>
           <require_confirmation>False</require_confirmation>
           <ignore_form_errors>False</ignore_form_errors>
           <set_marker_on_status>False</set_marker_on_status>
@@ -300,16 +300,28 @@ Pour r&#233;f&#233;rence, voici le d&#233;tail de la demande&#160;:
     <status>
       <id>finished</id>
       <name>Termin&#233;</name>
-      <colour>#CCCCCC</colour>
+      <colour>#cccccc</colour>
       <forced_endpoint>true</forced_endpoint>
       <visibility />
+      <items />
+    </status>
+    <status>
+      <id>0</id>
+      <name>Trait&#233;</name>
+      <colour>#FFFFFF</colour>
+      <visibility />
       <items>
-        <item type="sendmail" id="1">
+        <item type="sendmail" id="3">
           <to>
             <item role_id="_submitter">_submitter</item>
           </to>
           <mail_template>indus-usager-demande-traitee</mail_template>
                 </item>
+        <item type="jump" id="5">
+          <status>finished</status>
+          <mode>immediate</mode>
+          <set_marker_on_status>False</set_marker_on_status>
+        </item>
       </items>
     </status>
     <status>
