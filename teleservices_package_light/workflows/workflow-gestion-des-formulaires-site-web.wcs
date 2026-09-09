@@ -4,20 +4,24 @@
   <slug>gestion-des-formulaires-site-web</slug>
   <roles>
     <role id="_receiver">Agent traitant</role>
-  </roles><possible_status>
+  </roles>
+  <possible_status>
     <status>
       <id>just_submitted</id>
       <name>Nouvelle demande</name>
       <colour>#FFFFFF</colour>
       <visibility>
-        <role>_receiver</role>
-      </visibility><items>
+        <role>__restricted__</role>
+      </visibility>
+      <items>
         <item type="dispatch" id="1">
           <role_key>_receiver</role_key>
+          <operation_mode>set</operation_mode>
           <dispatch_type>manual</dispatch_type>
           <role_id slug="{{ form_var_service_role }}" role_id="{{ form_var_service_role }}">{{ form_var_service_role }}</role_id>
-          <operation_mode>set</operation_mode>
-        </item><item type="export_to_model" id="2">
+        </item>
+        <item type="export_to_model" id="2">
+          <model_file_mode>file</model_file_mode>
           <model_file>
             <base_filename>template-form-details.odt</base_filename>
             <content_type>application/vnd.oasis.opendocument.text</content_type>
@@ -189,19 +193,22 @@ c3R5bGVzLnhtbFBLAQIUABQACAgIAKQqc1AxbwXMXAQAAEYSAAALAAAAAAAAAAAAAAAAAKAaAABj
 b250ZW50LnhtbFBLAQIUABQACAgIAKQqc1Ah7C3TLQEAACUEAAAVAAAAAAAAAAAAAAAAADUfAABN
 RVRBLUlORi9tYW5pZmVzdC54bWxQSwUGAAAAABEAEQBlBAAApSAAAAAA
 </b64_content>
-          </model_file><convert_to_pdf>True</convert_to_pdf>
+          </model_file>
+          <convert_to_pdf>True</convert_to_pdf>
 <varname>formulaire</varname>
           <backoffice_filefield_id>bof78850cf-235e-418c-9c70-dea693df9488</backoffice_filefield_id>
           <attach_to_history>False</attach_to_history>
-                    <push_to_portfolio>False</push_to_portfolio>
           <method>non-interactive</method>
           <by>
             <item role_id="_receiver">_receiver</item>
-          </by><filename>formulaire</filename>
-        </item><item type="sendmail" id="3">
+          </by>
+          <filename>formulaire</filename>
+        </item>
+        <item type="sendmail" id="3">
           <to>
             <item role_id="{{ form_var_service_mail }}">{{ form_var_service_mail }}</item>
-          </to><subject>Nouvelle demande ({{ form_name }})</subject>
+          </to>
+          <subject>Nouvelle demande ({{ form_name }})</subject>
           <body>Bonjour,
 
 Un citoyen a pos&#233; une nouvelle question via le site web.
@@ -224,10 +231,12 @@ Cordialement
             <attachment>{{ form_var_fichiers_3_fichier }}</attachment>
             <attachment>{{ form_var_fichiers_4_fichier }}</attachment>
           </attachments>
-        </item><item type="sendmail" id="4">
+        </item>
+        <item type="sendmail" id="4">
           <to>
             <item role_id="{{ form_var_email }}">{{ form_var_email }}</item>
-          </to><subject>Votre demande {{ form_name }}</subject>
+          </to>
+          <subject>Votre demande {{ form_name }}</subject>
           <body>Bonjour,
 
 Nous vous confirmons la r&#233;ception de votre demande.
@@ -241,12 +250,24 @@ Pour r&#233;f&#233;rence, voici le d&#233;tail de la demande&#160;:
 {{ form_details }}
 {% endif %}
 </body>
-        </item><item type="jump" id="5">
+        </item>
+        <item type="jump" id="6">
+          <status>1</status>
+          <condition>
+            <type>django</type>
+            <value>form_var_service == "Je ne sais pas quel service" or form_var_service == "Autre"</value>
+          </condition>
+          <mode>immediate</mode>
+          <set_marker_on_status>False</set_marker_on_status>
+        </item>
+        <item type="jump" id="5">
           <status>accepted</status>
+          <mode>immediate</mode>
           <set_marker_on_status>False</set_marker_on_status>
         </item>
       </items>
-    </status><status>
+    </status>
+    <status>
       <id>accepted</id>
       <name>En cours de traitement</name>
       <colour>#66CCFF</colour>
@@ -257,101 +278,129 @@ Pour r&#233;f&#233;rence, voici le d&#233;tail de la demande&#160;:
           <button_label>Ajouter le commentaire</button_label>
           <by>
             <item role_id="_receiver">_receiver</item>
-          </by><varname>reponse</varname>
+          </by>
+          <varname>reponse</varname>
           <backoffice_info_text>&lt;p&gt;Zone d&amp;eacute;di&amp;eacute;e &amp;agrave; une r&amp;eacute;ponse &amp;agrave; donner au citoyen.&lt;/p&gt;
 </backoffice_info_text>
           <required>False</required>
-        </item><item type="addattachment" id="3">
+        </item>
+        <item type="choice" id="3">
+          <label>Cl&#244;turer la demande</label>
           <by>
             <item role_id="_receiver">_receiver</item>
-          </by><required>False</required>
-          <title>Transf&#233;rer un fichier</title>
-          <display_title>True</display_title>
-          <button_label>Transf&#233;rer un fichier</button_label>
-          <display_button>True</display_button>
-          <attach_to_history>True</attach_to_history>
-          <allow_portfolio_picking>False</allow_portfolio_picking>
-          <push_to_portfolio>False</push_to_portfolio>
-        </item><item type="choice" id="4">
-          <label>Vers trait&#233;</label>
-          <by>
-            <item role_id="_receiver">_receiver</item>
-          </by><status>0</status>
+          </by>
+          <status>0</status>
           <require_confirmation>False</require_confirmation>
           <ignore_form_errors>False</ignore_form_errors>
           <set_marker_on_status>False</set_marker_on_status>
+          <allow_as_mass_action>False</allow_as_mass_action>
+        </item>
+        <item type="choice" id="4">
+          <label>Transmettre la demande &#224; un autre service</label>
+          <by>
+            <item role_id="_receiver">_receiver</item>
+          </by>
+          <status>1</status>
+          <require_confirmation>False</require_confirmation>
+          <ignore_form_errors>False</ignore_form_errors>
+          <set_marker_on_status>False</set_marker_on_status>
+          <allow_as_mass_action>False</allow_as_mass_action>
         </item>
       </items>
-    </status><status>
+    </status>
+    <status>
       <id>finished</id>
       <name>Termin&#233;</name>
-      <colour>#CCCCCC</colour>
+      <colour>#cccccc</colour>
       <forced_endpoint>true</forced_endpoint>
       <visibility />
-      <items>
-        <item type="register-comment" id="1">
-          <comment>{{ form_workflow_form_contact_var_suite }}</comment>
-          <to>
-            <item role_id="_receiver">_receiver</item>
-          </to>
-                </item>
-      </items>
-    </status><status>
+      <items />
+    </status>
+    <status>
       <id>0</id>
       <name>Trait&#233;</name>
       <colour>#FFFFFF</colour>
       <visibility />
       <items>
-        <item type="form" id="1">
-          <by>
-            <item role_id="_receiver">_receiver</item>
-          </by><varname>contact</varname>
-          <hide_submit_button>False</hide_submit_button>
-          <formdef>
-            <name>-</name>
-            <fields>
-              <field>
-                <type>text</type>
-                <label type="str">Suite donn&#233;e &#224; la demande de contact (uniquement en interne)</label>
-                <required type="bool">True</required>
-                <hint type="str">Indiquez ici la fa&#231;on dont vous avez pu joindre le citoyen (par mail, par t&#233;l&#233;phone, via l'e-guichet...) et toute autre information utile pour vos coll&#232;gues. Le citoyen ne verra pas le contenu de ce champ.</hint>
-                <varname type="str">suite</varname>
-                <display_locations />
-                <prefill>
-                  <type>none</type>
-                </prefill><display_mode type="str">plain</display_mode>
-                <anonymise type="bool">True</anonymise>
-                <id type="str">1</id>
-              </field>
-            </fields>
-          </formdef>
-</item><item type="sendmail" id="3">
+        <item type="sendmail" id="3">
           <to>
             <item role_id="_submitter">_submitter</item>
-          </to><mail_template>indus-usager-demande-traitee</mail_template>
-        </item><item type="choice" id="2">
-          <label>Cl&#244;turer la demande</label>
-          <by>
-            <item role_id="_receiver">_receiver</item>
-          </by><status>finished</status>
-          <require_confirmation>False</require_confirmation>
-          <ignore_form_errors>False</ignore_form_errors>
+          </to>
+          <mail_template>indus-usager-demande-traitee</mail_template>
+                </item>
+        <item type="jump" id="5">
+          <status>finished</status>
+          <mode>immediate</mode>
           <set_marker_on_status>False</set_marker_on_status>
         </item>
       </items>
     </status>
-  </possible_status><backoffice-fields>
+    <status>
+      <id>1</id>
+      <name>Dispatcher</name>
+      <colour>#FFFFFF</colour>
+      <visibility />
+      <items>
+        <item type="editable" id="1">
+          <by>
+            <item role_id="_receiver">_receiver</item>
+          </by>
+          <status>just_submitted</status>
+          <label>Editer</label>
+          <operation_mode>full</operation_mode>
+          <set_marker_on_status>False</set_marker_on_status>
+        </item>
+        <item type="dispatch" id="2">
+          <role_key>_receiver</role_key>
+          <operation_mode>set</operation_mode>
+          <dispatch_type>manual</dispatch_type>
+          <role_id slug="{{ form_var_service_role }}" role_id="{{ form_var_service_role }}">{{ form_var_service_role }}</role_id>
+        </item>
+        <item type="choice" id="3">
+          <label>Vers le statut "En cours de traitement"</label>
+          <by>
+            <item role_id="_receiver">_receiver</item>
+          </by>
+          <status>accepted</status>
+          <require_confirmation>True</require_confirmation>
+          <ignore_form_errors>False</ignore_form_errors>
+          <set_marker_on_status>False</set_marker_on_status>
+          <allow_as_mass_action>True</allow_as_mass_action>
+        </item>
+      </items>
+    </status>
+  </possible_status>
+  <global_actions>
+    <action>
+      <id>1</id>
+      <name>supprimer</name>
+      <items>
+        <item type="remove" id="1" />
+      </items>
+      <triggers>
+        <trigger type="manual" id="8b52fcbd-25f6-4820-b781-89c53f01c417">
+          <roles>
+            <item slug="debug" role_id="02f67535def84023a6bc3b1d18002a22">Debug</item>
+          </roles>
+          <allow_as_mass_action>True</allow_as_mass_action>
+          <require_confirmation>True</require_confirmation>
+        </trigger>
+      </triggers>
+    </action>
+  </global_actions>
+  <backoffice-fields>
     <formdef>
       <name>-</name>
       <fields>
         <field>
           <type>file</type>
           <label type="str">formulaire</label>
-          <required type="bool">True</required>
+          <required type="str">required</required>
           <display_locations>
-            <display_location>validation</display_location>
-            <display_location>summary</display_location>
-          </display_locations><allow_portfolio_picking type="bool">False</allow_portfolio_picking>
+            <item>validation</item>
+            <item>summary</item>
+          </display_locations>
+          <anonymise type="str">final</anonymise>
           <automatic_image_resize type="bool">False</automatic_image_resize>
           <storage type="str">default</storage>
           <id type="str">bof78850cf-235e-418c-9c70-dea693df9488</id>
