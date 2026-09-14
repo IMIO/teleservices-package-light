@@ -140,19 +140,6 @@ Pour r&#233;f&#233;rence, voici le d&#233;tail de la demande&#160;:
       <colour>#FFFFFF</colour>
       <visibility />
       <items>
-        <item type="choice" id="1">
-          <label>Cloturer la demande</label>
-          <by>
-            <item role_id="_receiver">_receiver</item>
-          </by>
-          <status>finished</status>
-          <require_confirmation>True</require_confirmation>
-          <backoffice_info_text>&lt;p&gt;Cliquer sur ce bouton permet de cloturer d&amp;eacute;finitivement la demande.&lt;/p&gt;
-</backoffice_info_text>
-          <ignore_form_errors>False</ignore_form_errors>
-          <set_marker_on_status>False</set_marker_on_status>
-          <allow_as_mass_action>True</allow_as_mass_action>
-        </item>
         <item type="form" id="3">
           <by>
             <item role_id="_receiver">_receiver</item>
@@ -179,6 +166,19 @@ Pour r&#233;f&#233;rence, voici le d&#233;tail de la demande&#160;:
               </field>
             </fields>
           </formdef>
+        </item>
+        <item type="choice" id="1">
+          <label>Cloturer la demande</label>
+          <by>
+            <item role_id="_receiver">_receiver</item>
+          </by>
+          <status>finished</status>
+          <require_confirmation>True</require_confirmation>
+          <backoffice_info_text>&lt;p&gt;Cliquer sur ce bouton permet de cloturer d&amp;eacute;finitivement la demande.&lt;/p&gt;
+</backoffice_info_text>
+          <ignore_form_errors>False</ignore_form_errors>
+          <set_marker_on_status>False</set_marker_on_status>
+          <allow_as_mass_action>True</allow_as_mass_action>
         </item>
       </items>
     </status>
